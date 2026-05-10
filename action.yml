@@ -21,4 +21,4 @@ inputs:
 
 runs:
   using: 'node24'
-  main: 'src/main.ts'
+  main: 'dist/index.js'
