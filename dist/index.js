@@ -185,8 +185,8 @@ const Config = t.intersection([
 function parse(content) {
     const config = yaml.load(content);
     const decoded = Config.decode(config);
-    core.info(`${decoded}`);
     if ((0, Either_1.isRight)(decoded)) {
+        core.info(`right is ${decoded.right}`);
         return decoded.right;
     }
     else {
