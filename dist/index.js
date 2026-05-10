@@ -186,7 +186,7 @@ function parse(content) {
     const config = yaml.load(content);
     const decoded = Config.decode(config);
     if ((0, Either_1.isRight)(decoded)) {
-        core.info(`right is ${Config.encode(decoded.right)}`);
+        core.info(`right is ${decoded.right.labels}`);
         return decoded.right;
     }
     else {
