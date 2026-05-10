@@ -4,6 +4,7 @@ import reporter from 'io-ts-reporters';
 import { isRight } from 'fp-ts/Either';
 import { GitHub } from '@actions/github/lib/utils';
 import * as github from '@actions/github';
+import * as core from '@actions/core';
 
 const Matcher = t.partial({
   title: t.string,
@@ -100,5 +101,6 @@ export async function getConfig(
   });
 
   const content: string = await Buffer.from(response.data.content, response.data.encoding).toString();
+  core.info(content)
   return parse(content);
 }

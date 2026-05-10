@@ -2,6 +2,7 @@ import { Config } from '../config';
 import { GitHub } from '@actions/github/lib/utils';
 import * as github from '@actions/github';
 import { Minimatch } from 'minimatch';
+import * as core from '@actions/core';
 
 /**
  * Type-safe FileMatcher for convenience.
@@ -91,11 +92,11 @@ function anyMatch(files: string[], globs: string[]): boolean {
 
   const matchers = globs.map((g) => new Minimatch(g));
 
-  console.log("anyMatch");
+  core.info("anyMatch");
   for (const matcher of matchers) {
-    console.log(`trying matcher ${matcher}`);
+    core.info(`trying matcher ${matcher}`);
     for (const file of files) {
-      console.log(`trying file ${file}`);
+      core.info(`trying file ${file}`);
       if (matcher.match(file)) {
         return true;
       }
@@ -112,11 +113,11 @@ function anyMatch(files: string[], globs: string[]): boolean {
 function allMatch(files: string[], globs: string[]): boolean {
   const matchers = globs.map((g) => new Minimatch(g));
 
-  console.log("allmatch")
+  core.info("allmatch")
   for (const matcher of matchers) {
-    console.log(`trying matcher ${matcher}`);
+    core.info(`trying matcher ${matcher}`);
     for (const file of files) {
-      console.log(`trying file ${file}`);
+      core.info(`trying file ${file}`);
       if (!matcher.match(file)) {
         return false;
       }
@@ -158,7 +159,7 @@ export default async function match(client: InstanceType<typeof GitHub>, config:
   }
 
   const files = await getFiles(client, pr_number);
-  console.log(`trying ${files}`)
+  core.info(`trying ${files}`)
 
   return matchers
     .filter((matcher) => {
