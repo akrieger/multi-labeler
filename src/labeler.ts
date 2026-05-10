@@ -38,6 +38,11 @@ export async function labels(client: InstanceType<typeof GitHub>, config: Config
     core.info("no labels bruh");
     return [];
   }
+  core.info("have labels bruh");
+  for (const label of config.labels) {
+    core.info(`${label.label}`)
+    core.info(`${label.matcher?.files}`)
+  }
 
   const labels = await Promise.all([
     title(client, config),

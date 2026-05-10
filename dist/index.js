@@ -278,6 +278,11 @@ async function labels(client, config) {
         core.info("no labels bruh");
         return [];
     }
+    core.info("have labels bruh");
+    for (const label of config.labels) {
+        core.info(`${label.label}`);
+        core.info(`${label.matcher?.files}`);
+    }
     const labels = await Promise.all([
         (0, title_1.default)(client, config),
         (0, body_1.default)(client, config),
