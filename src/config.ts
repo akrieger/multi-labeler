@@ -81,7 +81,7 @@ export function parse(content: string): Config {
 
   const decoded = Config.decode(config);
   if (isRight(decoded)) {
-      core.info(`right is ${decoded.right}`)
+      core.info(`right is ${Config.encode(decoded.right)}`)
     return decoded.right;
   } else {
     core.info(`failed i guess`)
