@@ -91,8 +91,11 @@ function anyMatch(files: string[], globs: string[]): boolean {
 
   const matchers = globs.map((g) => new Minimatch(g));
 
+  console.log("anyMatch");
   for (const matcher of matchers) {
+    console.log(`trying matcher ${matcher}`);
     for (const file of files) {
+      console.log(`trying file ${file}`);
       if (matcher.match(file)) {
         return true;
       }
@@ -109,8 +112,11 @@ function anyMatch(files: string[], globs: string[]): boolean {
 function allMatch(files: string[], globs: string[]): boolean {
   const matchers = globs.map((g) => new Minimatch(g));
 
+  console.log("allmatch")
   for (const matcher of matchers) {
+    console.log(`trying matcher ${matcher}`);
     for (const file of files) {
+      console.log(`trying file ${file}`);
       if (!matcher.match(file)) {
         return false;
       }
@@ -152,6 +158,7 @@ export default async function match(client: InstanceType<typeof GitHub>, config:
   }
 
   const files = await getFiles(client, pr_number);
+  console.log(`trying ${files}`)
 
   return matchers
     .filter((matcher) => {
