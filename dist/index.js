@@ -283,6 +283,7 @@ async function labels(client, config) {
         core.info(`${label.label}`);
         core.info(`${label.matcher?.files}`);
     }
+    core.info(`${JSON.stringify(config)}`);
     const labels = await Promise.all([
         (0, title_1.default)(client, config),
         (0, body_1.default)(client, config),
