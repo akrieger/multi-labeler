@@ -11,6 +11,7 @@ import commits from './matcher/commits';
 import files from './matcher/files';
 import author from './matcher/author';
 import * as github from '@actions/github';
+import * as core from '@actions/core';
 
 /**
  * @param {string[]} labels that are newly derived
@@ -34,6 +35,7 @@ export function mergeLabels(labels: string[], config: Config): string[] {
 
 export async function labels(client: InstanceType<typeof GitHub>, config: Config): Promise<string[]> {
   if (!config.labels?.length) {
+    core.info("no labels bruh");
     return [];
   }
 

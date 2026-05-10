@@ -80,9 +80,11 @@ export function parse(content: string): Config {
   const config: any = yaml.load(content);
 
   const decoded = Config.decode(config);
+  core.info(`${decoded}`)
   if (isRight(decoded)) {
     return decoded.right;
   } else {
+    core.info(`failed i guess`)
     throw new Error(`labeler.yml parse error:\\n${reporter.report(decoded).join('\\n')}`);
   }
 }

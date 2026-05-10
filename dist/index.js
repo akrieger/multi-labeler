@@ -185,10 +185,12 @@ const Config = t.intersection([
 function parse(content) {
     const config = yaml.load(content);
     const decoded = Config.decode(config);
+    core.info(`${decoded}`);
     if ((0, Either_1.isRight)(decoded)) {
         return decoded.right;
     }
     else {
+        core.info(`failed i guess`);
         throw new Error(`labeler.yml parse error:\\n${io_ts_reporters_1.default.report(decoded).join('\\n')}`);
     }
 }
@@ -253,6 +255,7 @@ const commits_1 = __importDefault(__nccwpck_require__(215));
 const files_1 = __importDefault(__nccwpck_require__(7330));
 const author_1 = __importDefault(__nccwpck_require__(1202));
 const github = __importStar(__nccwpck_require__(3228));
+const core = __importStar(__nccwpck_require__(7484));
 /**
  * @param {string[]} labels that are newly derived
  * @param {Config} config of the labels
@@ -272,6 +275,7 @@ function mergeLabels(labels, config) {
 exports.mergeLabels = mergeLabels;
 async function labels(client, config) {
     if (!config.labels?.length) {
+        core.info("no labels bruh");
         return [];
     }
     const labels = await Promise.all([
