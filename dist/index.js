@@ -769,9 +769,12 @@ const core = __importStar(__nccwpck_require__(7484));
 function getMatchers(config) {
     return config
         .labels.filter((value) => {
+        core.info(`filtering ${value.label}`);
         if (Array.isArray(value.matcher?.files)) {
+            core.info("files is array");
             return value.matcher?.files.length;
         }
+        core.info("files is not array");
         return value.matcher?.files;
     })
         .map(({ label, matcher }) => {
@@ -875,6 +878,7 @@ async function match(client, config) {
     }
     const matchers = getMatchers(config);
     if (!matchers.length) {
+        core.info("found no matchers in config?");
         return [];
     }
     const files = await getFiles(client, pr_number);

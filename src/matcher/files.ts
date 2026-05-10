@@ -27,10 +27,13 @@ interface FileCountMatcher {
 function getMatchers(config: Config): FileMatcher[] {
   return config
     .labels!.filter((value) => {
+      core.info(`filtering ${value.label}`)
       if (Array.isArray(value.matcher?.files)) {
+        core.info("files is array")
         return value.matcher?.files.length;
       }
 
+      core.info("files is not array")
       return value.matcher?.files;
     })
     .map(({ label, matcher }) => {
@@ -155,6 +158,7 @@ export default async function match(client: InstanceType<typeof GitHub>, config:
   const matchers = getMatchers(config);
 
   if (!matchers.length) {
+    core.info("found no matchers in config?")
     return [];
   }
 
