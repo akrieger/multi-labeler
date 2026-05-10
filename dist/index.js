@@ -120,6 +120,7 @@ const t = __importStar(__nccwpck_require__(5726));
 const io_ts_reporters_1 = __importDefault(__nccwpck_require__(6842));
 const Either_1 = __nccwpck_require__(4119);
 const github = __importStar(__nccwpck_require__(3228));
+const core = __importStar(__nccwpck_require__(7484));
 const Matcher = t.partial({
     title: t.string,
     body: t.string,
@@ -201,6 +202,7 @@ async function getConfig(client, configPath, configRepo) {
         path: configPath,
     });
     const content = await Buffer.from(response.data.content, response.data.encoding).toString();
+    core.info(content);
     return parse(content);
 }
 exports.getConfig = getConfig;
@@ -751,6 +753,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const github = __importStar(__nccwpck_require__(3228));
 const minimatch_1 = __nccwpck_require__(6507);
+const core = __importStar(__nccwpck_require__(7484));
 /**
  * Get a type-safe FileMatcher
  */
@@ -812,11 +815,11 @@ function anyMatch(files, globs) {
         return true;
     }
     const matchers = globs.map((g) => new minimatch_1.Minimatch(g));
-    console.log("anyMatch");
+    core.info("anyMatch");
     for (const matcher of matchers) {
-        console.log(`trying matcher ${matcher}`);
+        core.info(`trying matcher ${matcher}`);
         for (const file of files) {
-            console.log(`trying file ${file}`);
+            core.info(`trying file ${file}`);
             if (matcher.match(file)) {
                 return true;
             }
@@ -830,11 +833,11 @@ function anyMatch(files, globs) {
  */
 function allMatch(files, globs) {
     const matchers = globs.map((g) => new minimatch_1.Minimatch(g));
-    console.log("allmatch");
+    core.info("allmatch");
     for (const matcher of matchers) {
-        console.log(`trying matcher ${matcher}`);
+        core.info(`trying matcher ${matcher}`);
         for (const file of files) {
-            console.log(`trying file ${file}`);
+            core.info(`trying file ${file}`);
             if (!matcher.match(file)) {
                 return false;
             }
@@ -866,7 +869,7 @@ async function match(client, config) {
         return [];
     }
     const files = await getFiles(client, pr_number);
-    console.log(`trying ${files}`);
+    core.info(`trying ${files}`);
     return matchers
         .filter((matcher) => {
         return allMatch(files, matcher.all) && anyMatch(files, matcher.any) && countMatch(files, matcher.count);

@@ -101,6 +101,6 @@ export async function getConfig(
   });
 
   const content: string = await Buffer.from(response.data.content, response.data.encoding).toString();
-  core.info(content)
+  core.info(content);
   return parse(content);
 }
